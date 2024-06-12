@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('home');
+        //
     }
 
     /**
@@ -20,15 +19,15 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LoginRequest $request)
+    public function store(Request $request)
     {
-
+        //
     }
 
     /**
