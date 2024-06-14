@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterRequest;
-use App\Models\User;
+use App\Http\Requests\CourseCreateRequest;
+use App\Models\Course;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
-class RegisterController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,29 +23,28 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view('register');
+        return view('course.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RegisterRequest $request)
+    public function store(CourseCreateRequest $request)
     {
         try {
             DB::beginTransaction();
 
-            $user = new User();
-            $user->name = $request->get('name');
-            $user->email = $request->get('email');
-            $user->password = Hash::make($request->get('password'));
+            $course = new Course();
+            $course->title = $request->get('title');
+            $course->description = $request->get('description');
+            $course->status = $request->get('status') ? 1 : 0;
+            $course->user_id =  auth()->user()->id;
 
-            $user->save();
-
-            Auth::login($user);
+            $course->save();
 
             DB::commit();
 
-            return response()->json(['state' => true, 'url' => 'dashboard'], 200);
+            return response()->json(['message' => 'Curso creado correctamente'], 200);
 
         } catch (\Exception $e) {
 

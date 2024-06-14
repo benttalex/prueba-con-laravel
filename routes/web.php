@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
@@ -28,6 +29,8 @@ Route::post('/register', [ RegisterController::class, 'store'])->name('register.
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [ DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('/cursos', CourseController::class );
 
     Route::get('/logout', function (){
         Session::flush();

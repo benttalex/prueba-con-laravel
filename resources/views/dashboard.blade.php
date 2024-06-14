@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
-<x-navbar/>
 
-<div class="container mt-5">
+@section('content')
 
-    Bienvenido {{ auth()->user()->name }}
+    <div class="container mt-5">
 
-</div>
+        Bienvenido {{ auth()->user()->name }}
+
+    </div>
+
+@endsection

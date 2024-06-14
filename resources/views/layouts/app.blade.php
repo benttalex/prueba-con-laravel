@@ -12,7 +12,9 @@
 </head>
 <body>
 
-@section('content')
+<x-navbar/>
+
+@yield('content')
 
 
 </body>

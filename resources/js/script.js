@@ -31,6 +31,13 @@ $('form').submit(function (e) {
             if (data.state) {
                 window.location.href = '/' + data.url;
             }
+
+            if (data.message){
+                console.log(data.message)
+                alert(data.message);
+
+                $('form')[0].reset();
+            }
         }
     });
 });
