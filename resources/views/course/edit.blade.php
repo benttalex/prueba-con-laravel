@@ -5,7 +5,9 @@
 
     <div class="container mt-5">
         <div class="row justify-content-md-center">
-            <form id="form" class="col-3" action="{{ route('cursos.update', [$course->id]) }}" method="PUT">
+            <form id="form" class="col-3" action="{{ route('cursos.update', [ 'curso' => $course ]) }}" method="POST">
+
+                @method('PUT')
 
                 <h3>Edicion de Curso</h3>
 

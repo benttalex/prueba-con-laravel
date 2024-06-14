@@ -1,6 +1,18 @@
 import DataTable from "datatables.net-bs5";
 
 $('form').submit(function (e) {
+
+    let $response;
+
+    if ( $(this).data('delete') ){
+        $response = confirm('Desea Borrar');
+        if ($response ===  false){
+            return false;
+        }
+    }
+
+    alert('aca');
+
     e.preventDefault();
     $('strong').empty();
 

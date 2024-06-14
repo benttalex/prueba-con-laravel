@@ -76,18 +76,18 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Course $curso)
     {
+        $course = Course::findOrfail( $curso->id );
 
         $this->authorize('update', $course);
 
         try {
             DB::beginTransaction();
 
-            $course = Course::findOrfail($id);
             $course->title = $request->get('title');
             $course->description = $request->get('description');
-            $course->status = $request->get('status') ? 1 : 0;
+            $course->status = $request->get('status') === 'on' ? 1 : $course->status;
 
             $course->save();
 
@@ -109,6 +109,17 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $course = Course::findOrfail( $id );
+        $this->authorize('update', $course);
+
+        try {
+            $course->delete();
+            return response()->json(['message' => 'Curso eliminado correctamente'], 200);
+
+        }catch (\Exception $e){
+            Log::error($e);
+            return response()->json(["message" => "Error", "errors" => ["error" => ["Ha ocurrido un error, intentelo más tarde"]]], 422);
+
+        }
     }
 }
