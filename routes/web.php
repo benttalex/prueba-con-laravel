@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::post('login', [HomeController::class, 'store'])->name('login');
+Route::post('/login', [HomeController::class, 'store'])->name('login');
 
-Route::get('register', [ RegisterController::class, 'create'])->name('register.create');
+Route::get('/register', [ RegisterController::class, 'create'])->name('register.create');
+Route::post('/register', [ RegisterController::class, 'store'])->name('register.store');
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', [ DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/logout', function (){
+        Session::flush();
+        Auth::logout();
+        return redirect('/');
+    })->name('logout');
+
+});

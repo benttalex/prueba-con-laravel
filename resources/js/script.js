@@ -1,7 +1,6 @@
 $('form').submit(function (e) {
     e.preventDefault();
     $('strong').empty();
-    $('.form-control').removeClass('is-invalid');
 
     var url_to = $(this).attr('action');
 
@@ -19,11 +18,11 @@ $('form').submit(function (e) {
         },
         error: function (data) {
             var errors = JSON.parse(data.responseText);
-            errors = errors['errors'];
-            for (error in errors) {
+            errors = errors.errors;
+            for (let error in errors) {
                 $('.spinner-border').addClass('d-none');
                 $('#' + error).addClass('is-invalid');
-                var id = "#" + error.replace(/(:|\.|\[|\]|,|=)/g, "\\$1") + "_errors";
+                var id = "#" + error.replace(/(:|\.|\[|\]|,|=)/g, "\\$1") + "_error";
                 $(id).html(errors[error]);
             }
         },

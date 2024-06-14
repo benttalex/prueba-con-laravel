@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('login');
+        return view('dashboard');
     }
 
     /**
@@ -27,15 +25,9 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LoginRequest $request)
+    public function store(Request $request)
     {
-        $credentials = $request->only(['email', 'password']);
-
-        if (Auth::attempt($credentials)) {
-            return response()->json(['state' => true, 'url' => 'dashboard'], 200);
-        }
-
-        return response()->json(["message" => "Error", "errors" => ["error" => ["Email o password incorrecto"]]], 422);
+        //
     }
 
     /**

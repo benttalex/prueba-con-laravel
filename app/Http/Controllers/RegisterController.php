@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -19,15 +25,39 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        return view();
+        return view('register');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        //
+
+        DB::beginTransaction();
+
+        try {
+
+            $user = new User();
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = Hash::make($request->get('password'));
+
+            $user->save();
+
+            Auth::login($user);
+
+            DB::commit();
+
+            return response()->json(['state' => true, 'url' => 'dashboard'], 200);
+
+        } catch (\Exception $e) {
+
+            Log::error($e);
+            DB::rollBack();
+            return response()->json(["message" => "Error", "errors" => ["error" => ["Ha ocurrido un error, intentelo más tarde"]]], 422);
+
+        }
     }
 
     /**
