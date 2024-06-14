@@ -6,7 +6,6 @@
     <div class="container mt-5">
         <div class="row justify-content-md-center">
             <form id="form"  class="col-3" action="{{ route('login') }}" method="POST">
-                @csrf
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>

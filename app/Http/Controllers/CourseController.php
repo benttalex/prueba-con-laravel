@@ -76,9 +76,32 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Course $course)
     {
-        //
+
+        $this->authorize('update', $course);
+
+        try {
+            DB::beginTransaction();
+
+            $course = Course::findOrfail($id);
+            $course->title = $request->get('title');
+            $course->description = $request->get('description');
+            $course->status = $request->get('status') ? 1 : 0;
+
+            $course->save();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Curso editado correctamente'], 200);
+
+        } catch (\Exception $e) {
+
+            Log::error($e);
+            DB::rollBack();
+            return response()->json(["message" => "Error", "errors" => ["error" => ["Ha ocurrido un error, intentelo más tarde"]]], 422);
+
+        }
     }
 
     /**

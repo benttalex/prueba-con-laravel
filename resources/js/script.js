@@ -5,11 +5,15 @@ $('form').submit(function (e) {
     $('strong').empty();
 
     var url_to = $(this).attr('action');
+    var method = $(this).attr('method');
 
     var datos = new FormData(document.getElementById("form"));
 
     $.ajax({
-        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: method,
         data: datos,
         url: url_to,
         dataType: 'json',

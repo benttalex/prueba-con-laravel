@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,8 +25,17 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (Throwable $e) {
+
+            if($e instanceof AccessDeniedHttpException) {
+                Log::info('From renderable method: '.$e->getMessage());
+
+                // you can return a view, json object, e.t.c
+                return response()->json(["message" => "Error", "errors" => ["error" => ["No tiene permisos para esta acción"]]], 422);
+
+            }
+
+
         });
     }
 }

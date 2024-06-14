@@ -5,7 +5,7 @@
     <div class="container mt-5">
         <div class="row justify-content-md-center">
             <form id="form" class="col-3" action="{{ route('register.store') }}" method="POST">
-                @csrf
+
                 <h3>Registro</h3>
 
                 <div class="mb-3">
