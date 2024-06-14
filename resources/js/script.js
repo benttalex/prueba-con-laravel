@@ -1,3 +1,5 @@
+import DataTable from "datatables.net-bs5";
+
 $('form').submit(function (e) {
     e.preventDefault();
     $('strong').empty();
@@ -41,3 +43,5 @@ $('form').submit(function (e) {
         }
     });
 });
+
+new DataTable('#list');

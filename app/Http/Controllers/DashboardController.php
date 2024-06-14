@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,7 +12,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $courses = Course::all();
+
+        return view('dashboard', compact('courses'));
     }
 
     /**
@@ -35,7 +38,7 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('course.detail');
     }
 
     /**

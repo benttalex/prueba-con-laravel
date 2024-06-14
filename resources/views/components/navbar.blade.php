@@ -7,6 +7,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
+                    </li>
+                </ul>
+
                 <ul class="navbar-nav flex-row flex-wrap ms-md-auto  mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -16,9 +22,7 @@
                             <li><a class="dropdown-item" href="{{ route('cursos.create') }}">Crear Curso</a></li>
                         </ul>
                     </li>
-                </ul>
 
-                <ul class="navbar-nav mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ auth()->user()->name }}

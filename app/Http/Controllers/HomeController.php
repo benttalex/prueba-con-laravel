@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -29,13 +30,19 @@ class HomeController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
+        try {
+            $credentials = $request->only(['email', 'password']);
 
-        if (Auth::attempt($credentials)) {
-            return response()->json(['state' => true, 'url' => 'dashboard'], 200);
+            if (Auth::attempt($credentials)) {
+                return response()->json(['state' => true, 'url' => 'dashboard'], 200);
+            }
+
+            return response()->json(["message" => "Error", "errors" => ["error" => ["Email o password incorrecto"]]], 422);
+        }catch (\Exception $e){
+            Log::error($e);
+            return response()->json(['message' => 'Error', "errors" => ["error" => ["A ocurrido un error, intentelo mas tarde"]]], 422);
         }
 
-        return response()->json(["message" => "Error", "errors" => ["error" => ["Email o password incorrecto"]]], 422);
     }
 
     /**
