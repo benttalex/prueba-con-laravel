@@ -60,7 +60,8 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        return view('course.detail', compact('course'));
     }
 
     /**
@@ -68,7 +69,8 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        return view('course.edit', compact('course'));
     }
 
     /**

@@ -38,7 +38,7 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        return view('course.detail');
+        //
     }
 
     /**
